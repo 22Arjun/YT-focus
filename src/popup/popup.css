@@ -1,0 +1,297 @@
+/* ─── Reset & base ─────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ─── Design tokens: Dark (default) ────────────────────────────────────────── */
+:root {
+  --bg:        #0f0f0f;
+  --bg2:       #1a1a1a;
+  --bg3:       #242424;
+  --border:    #2e2e2e;
+  --text:      #f1f1f1;
+  --text2:     #aaaaaa;
+  --text3:     #666666;
+  --accent:    #ff4444;
+  --on:        #22c55e;
+  --radius:    10px;
+  --radius-sm: 6px;
+  --shadow:    none;
+}
+
+/* ─── Design tokens: Light ──────────────────────────────────────────────────── */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg:     #ffffff;
+    --bg2:    #f2f2f2;
+    --bg3:    #e8e8e8;
+    --border: #dcdcdc;
+    --text:   #0f0f0f;
+    --text2:  #444444;
+    --text3:  #888888;
+    --accent: #cc0000;
+    --on:     #16a34a;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+}
+
+body {
+  width: 320px;
+  min-width: 320px;
+  font-family: -apple-system, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.4;
+}
+
+#root {
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Popup shell ──────────────────────────────────────────────────────────── */
+.popup {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Header ───────────────────────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.header__logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header__icon { font-size: 18px; }
+
+.header__title {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--text);
+}
+
+.header__right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.saved-badge {
+  font-size: 11px;
+  color: var(--on);
+  opacity: 0;
+  animation: fadeInOut 1.4s ease forwards;
+}
+
+@keyframes fadeInOut {
+  0%   { opacity: 0; transform: translateY(2px); }
+  20%  { opacity: 1; transform: translateY(0); }
+  80%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ─── Body ─────────────────────────────────────────────────────────────────── */
+.popup__body {
+  overflow-y: auto;
+  max-height: 520px;
+  transition: opacity 0.2s;
+  /* Hide scrollbar — Firefox */
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar — Chrome / Safari / Edge */
+.popup__body::-webkit-scrollbar {
+  display: none;
+}
+
+.popup__body--disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* ─── Section ──────────────────────────────────────────────────────────────── */
+.section {
+  padding: 12px 0 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section:last-child { border-bottom: none; }
+
+.section__title {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  padding: 0 16px 8px;
+}
+
+/* ─── Row ──────────────────────────────────────────────────────────────────── */
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  gap: 12px;
+  transition: background 0.1s;
+  border-radius: var(--radius-sm);
+  margin: 0 6px;
+}
+
+.row:hover { background: var(--bg2); }
+
+.row__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.row__label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.row__desc {
+  font-size: 11px;
+  color: var(--text3);
+}
+
+/* ─── Toggle ───────────────────────────────────────────────────────────────── */
+.toggle {
+  flex-shrink: 0;
+  position: relative;
+  width: 36px;
+  height: 20px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: var(--bg3);
+  transition: background 0.2s;
+  outline: none;
+  padding: 0;
+}
+
+.toggle--on { background: var(--on); }
+
+.toggle__thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.2s;
+  pointer-events: none;
+}
+
+.toggle--on .toggle__thumb { transform: translateX(16px); }
+
+/* ─── Presets ───────────────────────────────────────────────────────────────── */
+.presets {
+  display: flex;
+  gap: 8px;
+  padding: 0 16px 12px;
+}
+
+.preset-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 6px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text2);
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-transform: capitalize;
+}
+
+.preset-btn:hover {
+  background: var(--bg3);
+  color: var(--text);
+  border-color: var(--text3);
+}
+
+.preset-btn--active {
+  background: var(--bg3);
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.preset-btn span { font-size: 11px; }
+
+/* ─── Timer row ─────────────────────────────────────────────────────────────── */
+.timer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  margin: 0 6px;
+}
+
+.timer-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.timer-input {
+  width: 52px;
+  padding: 5px 8px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 13px;
+  text-align: center;
+  outline: none;
+}
+
+.timer-input:focus { border-color: var(--text3); }
+
+.timer-unit {
+  font-size: 11px;
+  color: var(--text3);
+}
+
+/* ─── Footer ────────────────────────────────────────────────────────────────── */
+.footer {
+  padding: 10px 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.footer__link {
+  font-size: 11px;
+  color: var(--text3);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.footer__link:hover { color: var(--text2); }

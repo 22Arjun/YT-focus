@@ -1,0 +1,150 @@
+/* ─── YT Focus Content Styles ──────────────────────────────────────────────
+   Classes are toggled on <html> by content.ts.
+   Each feature maps to exactly one class:
+     .ytf-hide-shorts
+     .ytf-hide-shorts-tab
+     .ytf-hide-home-feed
+     .ytf-hide-recommendations
+     .ytf-hide-end-cards
+     .ytf-hide-comments
+     .ytf-hide-autoplay
+     .ytf-hide-live-chat
+     .ytf-hide-merchandise
+     .ytf-hide-notification-bell
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* ── Shorts (shelf on home + search + subscriptions) ─────────────────────── */
+/* NOTE: We hide individual short items, NOT entire ytd-item-section-renderer.
+   On search results, the main section contains both regular videos and shorts;
+   hiding the whole section would hide all results and break the page. */
+.ytf-hide-shorts ytd-reel-shelf-renderer,
+.ytf-hide-shorts ytd-reel-item-renderer,
+.ytf-hide-shorts ytd-rich-section-renderer:has(ytd-rich-shelf-renderer[is-shorts]),
+.ytf-hide-shorts ytd-rich-shelf-renderer[is-shorts],
+.ytf-hide-shorts ytd-grid-video-renderer:has(ytd-thumbnail-overlay-time-status-renderer[overlay-style="SHORTS"]),
+.ytf-hide-shorts ytd-video-renderer:has(ytd-thumbnail-overlay-time-status-renderer[overlay-style="SHORTS"]) {
+  display: none !important;
+}
+
+/* ── Shorts tab in sidebar navigation ────────────────────────────────────── */
+.ytf-hide-shorts-tab ytd-guide-entry-renderer:has([title="Shorts"]),
+.ytf-hide-shorts-tab ytd-mini-guide-entry-renderer:has([title="Shorts"]),
+.ytf-hide-shorts-tab #endpoint[title="Shorts"] {
+  display: none !important;
+}
+
+/* ── Home feed (entire grid) ─────────────────────────────────────────────── */
+.ytf-hide-home-feed ytd-browse[page-subtype="home"] #primary ytd-rich-grid-renderer,
+.ytf-hide-home-feed ytd-browse[page-subtype="home"] #primary ytd-rich-section-renderer {
+  display: none !important;
+}
+
+/* ── Recommendations (right sidebar on watch page) ───────────────────────── */
+.ytf-hide-recommendations ytd-watch-next-secondary-results-renderer,
+.ytf-hide-recommendations #secondary.ytd-watch-flexy {
+  display: none !important;
+}
+
+/* ── End cards / end screens ─────────────────────────────────────────────── */
+.ytf-hide-end-cards .ytp-ce-element,
+.ytf-hide-end-cards .ytp-endscreen-content {
+  display: none !important;
+}
+
+/* ── Comments section ────────────────────────────────────────────────────── */
+.ytf-hide-comments #comments.ytd-watch-flexy,
+.ytf-hide-comments ytd-comments {
+  display: none !important;
+}
+
+/* ── Autoplay toggle ─────────────────────────────────────────────────────── */
+.ytf-hide-autoplay .ytp-autonav-toggle-button-container,
+.ytf-hide-autoplay .ytp-next-button {
+  display: none !important;
+}
+
+/* ── Live chat ────────────────────────────────────────────────────────────── */
+.ytf-hide-live-chat #chat.ytd-watch-flexy,
+.ytf-hide-live-chat ytd-live-chat-frame {
+  display: none !important;
+}
+
+/* ── Merchandise shelf ───────────────────────────────────────────────────── */
+.ytf-hide-merchandise ytd-merch-shelf-renderer,
+.ytf-hide-merchandise ytd-product-shelf-renderer {
+  display: none !important;
+}
+
+/* ── Notification bell ───────────────────────────────────────────────────── */
+.ytf-hide-notification-bell #notification-preference-button,
+.ytf-hide-notification-bell ytd-notification-topbar-button-renderer {
+  display: none !important;
+}
+
+/* ── Focus timer widget (injected by content.ts) ─────────────────────────── */
+#ytf-timer {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.82);
+  color: #fff;
+  font-family: 'YouTube Sans', 'Roboto', sans-serif;
+  font-size: 13px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.12);
+  pointer-events: auto;
+  user-select: none;
+  transition: opacity 0.2s;
+}
+
+#ytf-timer:hover {
+  opacity: 0.9;
+}
+
+#ytf-timer .ytf-timer-icon {
+  font-size: 15px;
+}
+
+#ytf-timer .ytf-timer-time {
+  font-size: 15px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+}
+
+#ytf-timer .ytf-timer-label {
+  font-size: 11px;
+  opacity: 0.6;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+#ytf-timer button {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: #fff;
+  padding: 3px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+#ytf-timer button:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+#ytf-timer.ytf-timer-done {
+  border-color: rgba(255, 90, 90, 0.6);
+  animation: ytf-pulse 1s ease-in-out infinite;
+}
+
+@keyframes ytf-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 90, 90, 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(255, 90, 90, 0); }
+}
